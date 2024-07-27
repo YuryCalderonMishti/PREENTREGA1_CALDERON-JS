@@ -10,7 +10,6 @@ const procedimientos = [
     { id: 9, nombre: "Retiro de uñas de gel", precio: 15 }
 ]
 
-
 function obtenerProcedimientoPorId(id) {
     return procedimientos.find(proc => proc.id === id)
 }
@@ -19,110 +18,80 @@ function costoTotal(precioBase, descuento) {
     return precioBase - (precioBase * (descuento / 100))
 }
 
-function mostrarPrecio(procedimiento) {
-    alert(`Las ${procedimiento.nombre} salen: $${procedimiento.precio}`)
+function calcularTotalCarrito(carrito) {
+    return carrito.reduce((total, proc) => total + proc.precio, 0)
 }
 
 let descuentoAplicado = false
 let carrito = []
 
-document.getElementById('btnSaludar').addEventListener('click', function() {
-    const nombre = document.getElementById('nombre').value
-    const apellido = document.getElementById('apellido').value
-    alert(`¡Hola ${nombre} ${apellido}!. Bienvenido a tu salón de uñas especializado.`);
-    mostrarProcedimientos()
-});
+// Saludo inicial
+alert("¡Bienvenido a Moira!")
+const nombre = prompt("Por favor ingrese su nombre:")
+const apellido = prompt("Por favor ingrese su apellido:")
+alert(`¡Hola ${nombre} ${apellido}!. Bienvenido a tu salón de uñas especializado.`)
 
-function mostrarProcedimientos() {
-    document.getElementById('procedimientos').style.display = 'block'
-    const lista = document.getElementById('listaProcedimientos')
-    lista.innerHTML = ''
+// Selección de procedimientos
+let continuar = true
+while (continuar) {
+    let mensaje = "Ingrese el número según el procedimiento que desee realizarse:\n"
     procedimientos.forEach(proc => {
-        const li = document.createElement('li')
-        li.textContent = `${proc.nombre} - $${proc.precio}`
-        li.addEventListener('click', () => seleccionarProcedimiento(proc.id))
-        lista.appendChild(li)
-    });
-}
+        mensaje += `${proc.id} - ${proc.nombre}: $${proc.precio}\n`
+    })
 
-function seleccionarProcedimiento(id) {
-    const procedimiento = obtenerProcedimientoPorId(id)
-    mostrarPrecio(procedimiento)
-    carrito.push(procedimiento)
-    document.getElementById('reserva').style.display = 'block'
-}
+    const opcion = Number(prompt(mensaje))
+    const procedimiento = obtenerProcedimientoPorId(opcion)
 
-document.getElementById('btnReservar').onclick = () => {
-    alert('Usted ha elegido realizarse el procedimiento de uñas, continuaremos eligiendo la fecha.')
-    elegirFecha()
-};
-
-document.getElementById('btnOfertas').onclick = () => {
-    if (!descuentoAplicado) {
-        alert('¡Espera, tenemos una súper oferta para ti! Te daremos 10% de descuento si reservas el lunes o martes.')
-        aplicarDescuento()
+    if (procedimiento) {
+        carrito.push(procedimiento)
+        alert(`Has agregado ${procedimiento.nombre} al carrito.`)
     } else {
-        alert('Ya has aplicado un descuento previamente.')
+        alert("Opción incorrecta")
     }
-};
 
-document.getElementById('btnVerCarrito').onclick = () => {
-    mostrarCarrito()
-};
+    continuar = confirm("¿Desea agregar otro procedimiento?")
+}
 
-document.getElementById('btnFinalizar').onclick = () => {
-    alert(`Compra finalizada. Total a pagar: $${calcularTotalCarrito()}`)
-    carrito = []
-    document.getElementById('carrito').style.display = 'none'
-    document.getElementById('totalCarrito').textContent = '0'
-};
-
-function elegirFecha() {
+// Reservar o aplicar descuento
+if (confirm("¿Deseas reservar el procedimiento(s) elegido(s)?")) {
+    alert("Usted ha elegido realizarse el procedimiento de uñas, continuaremos eligiendo la fecha.")
     const diaDeReservacion = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes\n3 - Miércoles\n4 - Jueves\n5 - Viernes\n6 - Sábado\n7 - Domingo"))
     if (diaDeReservacion >= 1 && diaDeReservacion <= 7) {
         alert("¡Fecha reservada!")
     } else {
         alert("Opción incorrecta")
     }
-}
-
-function aplicarDescuento() {
-    const diaDeReservacion2 = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes"))
-    if (diaDeReservacion2 === 1 || diaDeReservacion2 === 2) {
-        carrito = carrito.map(proc => {
-            proc.precio = costoTotal(proc.precio, 10);
-            return proc;
-        });
-        descuentoAplicado = true
+} else {
+    if (!descuentoAplicado) {
+        alert("¡Espera, tenemos una súper oferta para ti! Te daremos 10% de descuento si reservas el lunes o martes.")
+        const diaDeReservacion2 = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes"))
+        if (diaDeReservacion2 === 1 || diaDeReservacion2 === 2) {
+            carrito = carrito.map(proc => {
+                proc.precio = costoTotal(proc.precio, 10)
+                return proc;
+            })
+            descuentoAplicado = true
+            alert("Descuento aplicado.")
+        } else {
+            alert("Opción incorrecta")
+        }
     } else {
-        alert("Opción incorrecta")
+        alert("Ya has aplicado un descuento previamente.")
     }
 }
 
-function mostrarCarrito() {
-    document.getElementById('carrito').style.display = 'block'
-    const listaCarrito = document.getElementById('listaCarrito')
-    listaCarrito.innerHTML = ''
-    carrito.forEach(proc => {
-        const li = document.createElement('li')
-        li.textContent = `${proc.nombre} - $${proc.precio}`
-        listaCarrito.appendChild(li)
-    });
-    document.getElementById('totalCarrito').textContent = calcularTotalCarrito()
-}
+// Mostrar carrito y total
+let mensajeCarrito = "Carrito de compras:\n"
+carrito.forEach(proc => {
+    mensajeCarrito += `${proc.nombre}: $${proc.precio}\n`
+})
+mensajeCarrito += `Total: $${calcularTotalCarrito(carrito)}`
+alert(mensajeCarrito)
 
-function calcularTotalCarrito() {
-    return carrito.reduce((total, proc) => total + proc.precio, 0)
-}
-
-function obtenerProcedimientoPorId(id) {
-    return procedimientos.find(proc => proc.id === id)
-}
-
-function costoTotal(precioBase, descuento) {
-    return precioBase - (precioBase * (descuento / 100))
-}
-
-function mostrarPrecio(procedimiento) {
-    alert(`Las ${procedimiento.nombre} salen: $${procedimiento.precio}`)
+// Finalizar compra
+if (confirm("¿Desea finalizar la compra?")) {
+    alert(`Compra finalizada. Total a pagar: $${calcularTotalCarrito(carrito)}`)
+    carrito = []
+} else {
+    alert("Compra cancelada.")
 }
