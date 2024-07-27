@@ -1,76 +1,128 @@
-function saludar() {
-    alert("¡Bienvenido a Moira!")
-}
-saludar()
+const procedimientos = [
+    { id: 1, nombre: "Manicura básica", precio: 20 },
+    { id: 2, nombre: "Manicura francesa", precio: 25 },
+    { id: 3, nombre: "Manicura en gel", precio: 30 },
+    { id: 4, nombre: "Manicura de acrílico", precio: 35 },
+    { id: 5, nombre: "Relleno de uñas acrílicas", precio: 35 },
+    { id: 6, nombre: "Uñas de gel", precio: 40 },
+    { id: 7, nombre: "Uñas esculpidas", precio: 55 },
+    { id: 8, nombre: "Retiro de uñas acrílicas", precio: 15 },
+    { id: 9, nombre: "Retiro de uñas de gel", precio: 15 }
+]
 
-let nombre=prompt("Porfavor ingresar su nombre")
-let apellido=prompt("Porfavor ingresar su apellido")
-function saludarPersonalizado(nomb,apell) {
-    alert("¡Hola "+ nomb + " "+ apell +"!. Bienvenido a tu salon de uñas especializado.")
-}
-saludarPersonalizado(nombre,apellido)
 
-const opcion = Number(prompt("Ingrese el número segun el procedimiento que desee realizarse:\n1 - Semipermanentes\n2 - Uñas Acrílicas\n3 - Esmaltado tradicional"))
-if (opcion === 1) {
-    alert("Las uñas semipermanentes sale: $ 50")
-} else if (opcion === 2) {
-    alert("Las uñas acrílicas sale: $ 150")
-} else if (opcion === 3) {
-    alert("El esmaltado tradicional sale: $ 25 ")
-} else {
-    alert("Opción incorrecta")
+function obtenerProcedimientoPorId(id) {
+    return procedimientos.find(proc => proc.id === id)
 }
 
-function costoTotal(precioBase,descuentos){
-    let subTotal= precioBase - (precioBase*(descuentos/100))
-    return subTotal
+function costoTotal(precioBase, descuento) {
+    return precioBase - (precioBase * (descuento / 100))
 }
-const reserva= Number(prompt("¿Deseas reservar el procedimiento elegido?\n1 - SI\n2 - NO"))
-    if (reserva === 1) {
-        alert("Usted a elegido realizarse el procedimiento de uñas, continuaremos eligiendo la fecha")
-        const diaDeReservacion = Number(prompt("Ingrese el dia de semana que desea el servicio:\n1 - Lunes\n2 - Martes\n3 - Miercoles\n4 - Jueves\n5 - Viernes\n6 - Sábado\n7 - Domingo"))
-        if (diaDeReservacion >= 1 && diaDeReservacion <= 7) {
-            alert("¡Perfecto Fecha reservada!")
-        
-        } else {
-            alert("Opción incorrecta")
-        }
-    } 
-    else if (reserva === 2) {
-        alert("¡Espera tenemos una super oferta para ti!\n Te daremos 10% de descuento si reservas el lunes o martes")
-        const diaDeReservacion2 = Number(prompt("Ingrese el dia de semana que desea el servicio:\n1 - Lunes\n2 - Martes"))
-        if (diaDeReservacion2 === 1) {
-            const opcion = Number(prompt("Ingrese el número segun el procedimiento que desee realizarse:\n1 - Semipermanentes\n2 - Uñas Acrílicas\n3 - Esmaltado tradicional"))
-            if (opcion === 1) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(50,10))
-                
-            } else if (opcion === 2) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(150,10))
-            } else if (opcion === 3) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(25,10))
-            } else {
-                alert("Opción incorrecta")
-            }
-        } 
-        else if (diaDeReservacion2 === 2) {
-            const opcion = Number(prompt("Ingrese el número segun el procedimiento que desee realizarse:\n1 - Semipermanentes\n2 - Uñas Acrílicas\n3 - Esmaltado tradicional"))
-            if (opcion === 1) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(50,10))
-                
-            } else if (opcion === 2) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(150,10))
-            } else if (opcion === 3) {
-                alert("Las uñas semipermanentes sale: $ " + costoTotal(25,10))
-            } else {
-                alert("Opción incorrecta")
-            }
-        } 
-        else {
-            alert("Opción incorrecta")
-        }
+
+function mostrarPrecio(procedimiento) {
+    alert(`Las ${procedimiento.nombre} salen: $${procedimiento.precio}`)
+}
+
+let descuentoAplicado = false
+let carrito = []
+
+document.getElementById('btnSaludar').addEventListener('click', function() {
+    const nombre = document.getElementById('nombre').value
+    const apellido = document.getElementById('apellido').value
+    alert(`¡Hola ${nombre} ${apellido}!. Bienvenido a tu salón de uñas especializado.`);
+    mostrarProcedimientos()
+});
+
+function mostrarProcedimientos() {
+    document.getElementById('procedimientos').style.display = 'block'
+    const lista = document.getElementById('listaProcedimientos')
+    lista.innerHTML = ''
+    procedimientos.forEach(proc => {
+        const li = document.createElement('li')
+        li.textContent = `${proc.nombre} - $${proc.precio}`
+        li.addEventListener('click', () => seleccionarProcedimiento(proc.id))
+        lista.appendChild(li)
+    });
+}
+
+function seleccionarProcedimiento(id) {
+    const procedimiento = obtenerProcedimientoPorId(id)
+    mostrarPrecio(procedimiento)
+    carrito.push(procedimiento)
+    document.getElementById('reserva').style.display = 'block'
+}
+
+document.getElementById('btnReservar').onclick = () => {
+    alert('Usted ha elegido realizarse el procedimiento de uñas, continuaremos eligiendo la fecha.')
+    elegirFecha()
+};
+
+document.getElementById('btnOfertas').onclick = () => {
+    if (!descuentoAplicado) {
+        alert('¡Espera, tenemos una súper oferta para ti! Te daremos 10% de descuento si reservas el lunes o martes.')
+        aplicarDescuento()
+    } else {
+        alert('Ya has aplicado un descuento previamente.')
     }
-    else {
+};
+
+document.getElementById('btnVerCarrito').onclick = () => {
+    mostrarCarrito()
+};
+
+document.getElementById('btnFinalizar').onclick = () => {
+    alert(`Compra finalizada. Total a pagar: $${calcularTotalCarrito()}`)
+    carrito = []
+    document.getElementById('carrito').style.display = 'none'
+    document.getElementById('totalCarrito').textContent = '0'
+};
+
+function elegirFecha() {
+    const diaDeReservacion = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes\n3 - Miércoles\n4 - Jueves\n5 - Viernes\n6 - Sábado\n7 - Domingo"))
+    if (diaDeReservacion >= 1 && diaDeReservacion <= 7) {
+        alert("¡Fecha reservada!")
+    } else {
         alert("Opción incorrecta")
     }
+}
 
+function aplicarDescuento() {
+    const diaDeReservacion2 = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes"))
+    if (diaDeReservacion2 === 1 || diaDeReservacion2 === 2) {
+        carrito = carrito.map(proc => {
+            proc.precio = costoTotal(proc.precio, 10);
+            return proc;
+        });
+        descuentoAplicado = true
+    } else {
+        alert("Opción incorrecta")
+    }
+}
 
+function mostrarCarrito() {
+    document.getElementById('carrito').style.display = 'block'
+    const listaCarrito = document.getElementById('listaCarrito')
+    listaCarrito.innerHTML = ''
+    carrito.forEach(proc => {
+        const li = document.createElement('li')
+        li.textContent = `${proc.nombre} - $${proc.precio}`
+        listaCarrito.appendChild(li)
+    });
+    document.getElementById('totalCarrito').textContent = calcularTotalCarrito()
+}
+
+function calcularTotalCarrito() {
+    return carrito.reduce((total, proc) => total + proc.precio, 0)
+}
+
+function obtenerProcedimientoPorId(id) {
+    return procedimientos.find(proc => proc.id === id)
+}
+
+function costoTotal(precioBase, descuento) {
+    return precioBase - (precioBase * (descuento / 100))
+}
+
+function mostrarPrecio(procedimiento) {
+    alert(`Las ${procedimiento.nombre} salen: $${procedimiento.precio}`)
+}

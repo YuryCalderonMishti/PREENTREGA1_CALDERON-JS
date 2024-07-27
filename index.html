@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Salón de uñas Moira</title>
 </head>
 <body>
+    <h1>Bienvenido a Moira</h1>
+    <div id="welcome">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre"><br>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido"><br>
+        <button id="btnSaludar">Saludar</button>
+    </div>
+    <div id="procedimientos" style="display:none;">
+        <h2>Elige tu procedimiento</h2>
+        <ul id="listaProcedimientos"></ul>
+    </div>
+    <div id="reserva" style="display:none;">
+        <h2>Reservar Procedimiento</h2>
+        <button id="btnReservar">Reservar</button>
+        <button id="btnOfertas">Ver Ofertas</button>
+        <button id="btnVerCarrito">Ver Carrito</button>
+    </div>
+    <div id="carrito" style="display:none;">
+        <h2>Carrito de Compras</h2>
+        <ul id="listaCarrito"></ul>
+        <h3>Total: $<span id="totalCarrito">0</span></h3>
+        <button id="btnFinalizar">Finalizar Compra</button>
+    </div>
     <script src="./script.js"></script>
 </body>
 </html>
