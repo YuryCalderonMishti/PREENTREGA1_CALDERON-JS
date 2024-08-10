@@ -1,0 +1,134 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #F4C2C2;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+input, select, button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px;
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+}
+
+input[type="text"] {
+    width: calc(100% - 22px);
+}
+
+button {
+    background-color: #D4AF37;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #B5902B;
+}
+
+#carrito {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+}
+
+#carritoItems {
+    list-style: none;
+    padding: 0;
+}
+
+#carritoItems li {
+    margin-bottom: 10px;
+}
+
+#totalCarrito {
+    font-weight: bold;
+}
+
+#paginaCarrito {
+    display: none;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Productos */
+.producto {
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #F4C2C2;
+}
+
+.producto img {
+    max-width: 100%;
+    height: auto;
+}
+
+.producto button {
+    background-color: #D2E8D0;
+    color: #333;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.producto button:hover {
+    background-color: #B0D5B9;
+}
+
+/* Carrito */
+.tarjetaCarrito {
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #F4C2C2;
+}
+
+.tarjetaCarrito p {
+    margin: 5px 0;
+}
+
+/* Filtros */
+#filtros {
+    margin-bottom: 20px;
+}
+
+#filtros button {
+    background-color: #D4AF37;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#filtros button:hover {
+    background-color: #B5902B;
+}

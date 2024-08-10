@@ -4,8 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salón de uñas Moira</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script src="./script.js"></script>
+    <div class="container">
+        <h1>Bienvenido al Salón de Uñas</h1>
+        
+        <div id="saludoPersonalizado"></div>
+
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre">
+        </div>
+
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido">
+        </div>
+
+        <div>
+            <label for="procedimiento">Selecciona el procedimiento:</label>
+            <select id="procedimiento">
+                <option value="20">Manicura básica - $20</option>
+                <option value="25">Manicura francesa - $25</option>
+                <option value="30">Manicura en gel - $30</option>
+                <option value="35">Manicura de acrílico - $35</option>
+                <option value="35">Relleno de uñas acrílicas - $35</option>
+                <option value="40">Uñas de gel - $40</option>
+                <option value="55">Uñas esculpidas - $55</option>
+                <option value="15">Retiro de uñas acrílicas - $15</option>
+                <option value="15">Retiro de uñas de gel - $15</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="reserva">¿Deseas reservar?</label>
+            <select id="reserva">
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+            </select>
+        </div>
+
+        <div id="fechaReservaDiv" style="display: none;">
+            <label for="diaReserva">Selecciona el día:</label>
+            <select id="diaReserva">
+                <option value="1">Lunes</option>
+                <option value="2">Martes</option>
+                <option value="3">Miércoles</option>
+                <option value="4">Jueves</option>
+                <option value="5">Viernes</option>
+                <option value="6">Sábado</option>
+                <option value="7">Domingo</option>
+            </select>
+        </div>
+
+        <button id="comprar">Finalizar Compra</button>
+
+        <div id="carrito">
+            <h2>Carrito</h2>
+            <div id="contenedorCarrito"></div>
+            <p id="totalCarrito">Total: $0</p>
+        </div>
+        
+        <div id="mensajeFinalCompra"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

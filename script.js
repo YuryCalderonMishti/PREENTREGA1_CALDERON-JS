@@ -1,97 +1,87 @@
-const procedimientos = [
-    { id: 1, nombre: "Manicura básica", precio: 20 },
-    { id: 2, nombre: "Manicura francesa", precio: 25 },
-    { id: 3, nombre: "Manicura en gel", precio: 30 },
-    { id: 4, nombre: "Manicura de acrílico", precio: 35 },
-    { id: 5, nombre: "Relleno de uñas acrílicas", precio: 35 },
-    { id: 6, nombre: "Uñas de gel", precio: 40 },
-    { id: 7, nombre: "Uñas esculpidas", precio: 55 },
-    { id: 8, nombre: "Retiro de uñas acrílicas", precio: 15 },
-    { id: 9, nombre: "Retiro de uñas de gel", precio: 15 }
-]
+document.addEventListener("DOMContentLoaded", () => {
+    const nombreInput = document.getElementById('nombre');
+    const apellidoInput = document.getElementById('apellido');
+    const procedimientoSelect = document.getElementById('procedimiento');
+    const reservaSelect = document.getElementById('reserva');
+    const fechaReservaDiv = document.getElementById('fechaReservaDiv');
+    const diaReservaSelect = document.getElementById('diaReserva');
+    const btnFinalizar = document.getElementById('comprar');
+    const contenedorCarrito = document.getElementById('contenedorCarrito');
+    const totalCarrito = document.getElementById('totalCarrito');
+    const mensajeFinalCompra = document.getElementById('mensajeFinalCompra');
 
-function obtenerProcedimientoPorId(id) {
-    return procedimientos.find(proc => proc.id === id)
-}
+    let carrito = obtenerCarrito();
 
-function costoTotal(precioBase, descuento) {
-    return precioBase - (precioBase * (descuento / 100))
-}
-
-function calcularTotalCarrito(carrito) {
-    return carrito.reduce((total, proc) => total + proc.precio, 0)
-}
-
-let descuentoAplicado = false
-let carrito = []
-
-// Saludo inicial
-alert("¡Bienvenido a Moira!")
-const nombre = prompt("Por favor ingrese su nombre:")
-const apellido = prompt("Por favor ingrese su apellido:")
-alert(`¡Hola ${nombre} ${apellido}!. Bienvenido a tu salón de uñas especializado.`)
-
-// Selección de procedimientos
-let continuar = true
-while (continuar) {
-    let mensaje = "Ingrese el número según el procedimiento que desee realizarse:\n"
-    procedimientos.forEach(proc => {
-        mensaje += `${proc.id} - ${proc.nombre}: $${proc.precio}\n`
-    })
-
-    const opcion = Number(prompt(mensaje))
-    const procedimiento = obtenerProcedimientoPorId(opcion)
-
-    if (procedimiento) {
-        carrito.push(procedimiento)
-        alert(`Has agregado ${procedimiento.nombre} al carrito.`)
-    } else {
-        alert("Opción incorrecta")
+    function actualizarSaludo() {
+        const nombre = nombreInput.value;
+        const apellido = apellidoInput.value;
+        const saludoPersonalizado = document.getElementById('saludoPersonalizado');
+        saludoPersonalizado.innerHTML = nombre && apellido ? `¡Hola ${nombre} ${apellido}! Bienvenido a tu salón de uñas.` : '';
     }
 
-    continuar = confirm("¿Desea agregar otro procedimiento?")
-}
-
-// Reservar o aplicar descuento
-if (confirm("¿Deseas reservar el procedimiento(s) elegido(s)?")) {
-    alert("Usted ha elegido realizarse el procedimiento de uñas, continuaremos eligiendo la fecha.")
-    const diaDeReservacion = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes\n3 - Miércoles\n4 - Jueves\n5 - Viernes\n6 - Sábado\n7 - Domingo"))
-    if (diaDeReservacion >= 1 && diaDeReservacion <= 7) {
-        alert("¡Fecha reservada!")
-    } else {
-        alert("Opción incorrecta")
+    function addToCarrito(nombre, precio) {
+        const producto = { nombre, precio, unidades: 1, subtotal: precio };
+        carrito.push(producto);
+        setearCarrito(carrito);
+        renderizarCarrito();
     }
-} else {
-    if (!descuentoAplicado) {
-        alert("¡Espera, tenemos una súper oferta para ti! Te daremos 10% de descuento si reservas el lunes o martes.")
-        const diaDeReservacion2 = Number(prompt("Ingrese el día de la semana que desea el servicio:\n1 - Lunes\n2 - Martes"))
-        if (diaDeReservacion2 === 1 || diaDeReservacion2 === 2) {
-            carrito = carrito.map(proc => {
-                proc.precio = costoTotal(proc.precio, 10)
-                return proc;
-            })
-            descuentoAplicado = true
-            alert("Descuento aplicado.")
+
+    function renderizarCarrito() {
+        contenedorCarrito.innerHTML = '';
+        let total = 0;
+        carrito.forEach(({ nombre, precio, unidades, subtotal }) => {
+            contenedorCarrito.innerHTML += `
+                <div class="tarjetaCarrito">
+                    <p>${nombre}</p>
+                    <p>$${precio}</p>
+                    <p>${unidades} u.</p>
+                    <p>$${subtotal}</p>
+                </div>
+            `;
+            total += subtotal;
+        });
+        totalCarrito.innerText = `Total: $${total.toFixed(2)}`;
+    }
+
+    function finalizarCompra() {
+        if (carrito.length > 0) {
+            setearCarrito([]);
+            renderizarCarrito();
+            mensajeFinalCompra.innerText = "¡Gracias por su compra!";
         } else {
-            alert("Opción incorrecta")
+            mensajeFinalCompra.innerText = "El carrito está vacío.";
         }
-    } else {
-        alert("Ya has aplicado un descuento previamente.")
     }
-}
 
-// Mostrar carrito y total
-let mensajeCarrito = "Carrito de compras:\n"
-carrito.forEach(proc => {
-    mensajeCarrito += `${proc.nombre}: $${proc.precio}\n`
-})
-mensajeCarrito += `Total: $${calcularTotalCarrito(carrito)}`
-alert(mensajeCarrito)
+    function obtenerCarrito() {
+        return JSON.parse(localStorage.getItem('carrito')) || [];
+    }
 
-// Finalizar compra
-if (confirm("¿Desea finalizar la compra?")) {
-    alert(`Compra finalizada. Total a pagar: $${calcularTotalCarrito(carrito)}`)
-    carrito = []
-} else {
-    alert("Compra cancelada.")
-}
+    function setearCarrito(carrito) {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+    nombreInput.addEventListener('input', actualizarSaludo);
+    apellidoInput.addEventListener('input', actualizarSaludo);
+
+    procedimientoSelect.addEventListener('change', (event) => {
+        const precio = parseFloat(event.target.value);
+        const nombre = event.target.options[event.target.selectedIndex].text.split(' - ')[0];
+        addToCarrito(nombre, precio);
+    });
+
+    reservaSelect.addEventListener('change', () => {
+        if (reservaSelect.value === '1') {
+            fechaReservaDiv.style.display = 'block';
+        } else {
+            fechaReservaDiv.style.display = 'none';
+        }
+    });
+
+    diaReservaSelect.addEventListener('change', () => {
+        const dia = diaReservaSelect.options[diaReservaSelect.selectedIndex].text;
+        mensajeFinalCompra.innerText = `¡Perfecto! Fecha reservada para el ${dia}.`;
+    });
+
+    btnFinalizar.addEventListener('click', finalizarCompra);
+});
