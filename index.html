@@ -1,72 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salón de uñas Moira</title>
+    <title>Salon de Uñas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Bienvenido al Salón de Uñas</h1>
-        
-        <div id="saludoPersonalizado"></div>
-
-        <div>
+    <header>
+        <h1>Salon de Uñas</h1>
+        <nav>
+            <button id="verCarrito">CARRITO</button>
+            <button id="reservarTurno">RESERVAR TURNO</button>
+        </nav>
+    </header>
+    <div class="section" id="productos">
+        <h2>Tratamientos</h2>
+        <div class="productos-grid" id="lista-productos">
+            <!-- Los productos se cargarán aquí mediante JavaScript -->
+        </div>
+    </div>
+    <div class="section oculto" id="carrito">
+        <h2>Carrito</h2>
+        <div id="carrito-contenido">
+            <!-- Los productos del carrito se cargarán aquí mediante JavaScript -->
+        </div>
+        <button id="finalizarCompra">Finalizar Compra</button>
+    </div>
+    <div class="section oculto" id="reserva">
+        <h2>Reservar Turno</h2>
+        <form id="reserva-form">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre">
-        </div>
-
-        <div>
+            <input type="text" id="nombre" name="nombre" required>
             <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido">
-        </div>
-
-        <div>
-            <label for="procedimiento">Selecciona el procedimiento:</label>
-            <select id="procedimiento">
-                <option value="20">Manicura básica - $20</option>
-                <option value="25">Manicura francesa - $25</option>
-                <option value="30">Manicura en gel - $30</option>
-                <option value="35">Manicura de acrílico - $35</option>
-                <option value="35">Relleno de uñas acrílicas - $35</option>
-                <option value="40">Uñas de gel - $40</option>
-                <option value="55">Uñas esculpidas - $55</option>
-                <option value="15">Retiro de uñas acrílicas - $15</option>
-                <option value="15">Retiro de uñas de gel - $15</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="reserva">¿Deseas reservar?</label>
-            <select id="reserva">
-                <option value="0">No</option>
-                <option value="1">Sí</option>
-            </select>
-        </div>
-
-        <div id="fechaReservaDiv" style="display: none;">
-            <label for="diaReserva">Selecciona el día:</label>
-            <select id="diaReserva">
-                <option value="1">Lunes</option>
-                <option value="2">Martes</option>
-                <option value="3">Miércoles</option>
-                <option value="4">Jueves</option>
-                <option value="5">Viernes</option>
-                <option value="6">Sábado</option>
-                <option value="7">Domingo</option>
-            </select>
-        </div>
-
-        <button id="comprar">Finalizar Compra</button>
-
-        <div id="carrito">
-            <h2>Carrito</h2>
-            <div id="contenedorCarrito"></div>
-            <p id="totalCarrito">Total: $0</p>
-        </div>
-        
-        <div id="mensajeFinalCompra"></div>
+            <input type="text" id="apellido" name="apellido" required>
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" required>
+            <label for="hora">Hora:</label>
+            <input type="time" id="hora" name="hora" required>
+            <button type="submit">Reservar</button>
+        </form>
     </div>
     <script src="script.js"></script>
 </body>

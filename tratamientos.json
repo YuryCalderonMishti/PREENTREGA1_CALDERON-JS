@@ -1,0 +1,11 @@
+[
+    { "id": 1, "nombre": "Manicura Básica", "precio": 20, "imagen": "https://plus.unsplash.com/premium_photo-1664378801819-0e351f29d863?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+    { "id": 2, "nombre": "Manicura Francesa", "precio": 25, "imagen": "https://www.beauty-alhambra.com/wp-content/uploads/2023/10/manicura-francesa.webp" },
+    { "id": 3, "nombre": "Manicura en Gel", "precio": 30, "imagen": "https://www.materialestetica.com/blog/wp-content/uploads/2015/12/b-tutorial-manicura-esmalte-semipermanente-gel-semilac.jpg" },
+    { "id": 4, "nombre": "Manicura de Acrílico", "precio": 35, "imagen": "https://i.pinimg.com/736x/86/43/61/864361bc9de16801df47425a5e1177ec.jpg" },
+    { "id": 5, "nombre": "Relleno de Uñas Acrílicas", "precio": 35, "imagen": "https://i.ytimg.com/vi/jXAJpok8dyY/hqdefault.jpg" },
+    { "id": 6, "nombre": "Uñas de Gel", "precio": 40, "imagen": "https://content.clara.es/medio/2022/09/21/diseno-de-unas-de-gel-tonos-marrones_5cba3898_1000x1500.jpg" },
+    { "id": 7, "nombre": "Uñas Esculpidas", "precio": 55, "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUFoAH69OjMX0CjKVnBPzHlnABS3_MaLS52A&s" },
+    { "id": 8, "nombre": "Retiro de Uñas Acrílicas", "precio": 15, "imagen": "https://i.pinimg.com/736x/78/a4/b9/78a4b955092d6af69b07fc3a981731fa.jpg" },
+    { "id": 9, "nombre": "Retiro de Uñas de Gel", "precio": 15, "imagen": "https://i.pinimg.com/736x/04/fa/61/04fa61a63bccf37a473a8faa6f49548c.jpg" }
+]
